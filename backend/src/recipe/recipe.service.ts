@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
+import { Recipe, RecipesResponse } from './recipe';
 
 @Injectable()
 export class RecipeService {
@@ -14,7 +15,7 @@ export class RecipeService {
     ingredient?: string;
     country?: string;
     category?: string;
-  }) {
+  }): Promise<RecipesResponse> {
     let url = `${this.BASE_URL}/search.php?s=`;
 
     if (filter?.ingredient)
@@ -24,12 +25,14 @@ export class RecipeService {
     if (filter?.category)
       url = `${this.BASE_URL}/filter.php?c=${filter.category}`;
 
-    const response = await axios.get(url);
+    const response = await axios.get<RecipesResponse>(url);
     return response.data;
   }
 
-  async getRecipeById(id: string) {
-    const response = await axios.get(`${this.BASE_URL}/lookup.php?i=${id}`);
+  async getRecipeById(id: string): Promise<Recipe> {
+    const response = await axios.get<Recipe>(
+      `${this.BASE_URL}/lookup.php?i=${id}`,
+    );
     return response.data;
   }
 }
