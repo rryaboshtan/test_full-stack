@@ -53,7 +53,3 @@ export type Recipe = {
   strCreativeCommonsConfirmed: string | null;
   dateModified: string | null;
 };
-
-export type RecipesResponse = {
-  meals: Recipe[];
-};

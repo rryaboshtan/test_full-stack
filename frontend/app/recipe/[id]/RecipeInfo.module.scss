@@ -1,0 +1,48 @@
+.container {
+  padding: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  gap: 30px;
+}
+
+.recipeImage {
+  width: 30%;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+}
+
+.recipeName {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.recipeDetails {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+}
+
+.ingredients {
+  margin-top: 20px;
+}
+
+.ingredients ul {
+  list-style: none;
+  padding: 0;
+}
+
+.ingredients li {
+  font-size: 16px;
+  color: #0070f3;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.ingredients li:hover {
+  color: #0056b3;
+}
