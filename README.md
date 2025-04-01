@@ -46,10 +46,9 @@ npm install    # or 'yarn install' if using Yarn
 
 ### Step 4: Running the Backend (Nest.js)
 
-Go to the backend folder and run the Nest.js server:
+Run the Nest.js server:
 
 ```bash
-cd backend
 npm run start:dev   # This will start the Nest.js server in development mode
 ```
 Your backend should now be running on http://localhost:3000.
