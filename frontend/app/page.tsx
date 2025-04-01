@@ -11,7 +11,9 @@ export default function RecipeListPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [ingredient, setIngredient] = useState(searchParams.get('ingredient') || '');
+  const [ingredient, setIngredient] = useState(
+    searchParams.get('ingredient') || '',
+  );
   const [country, setCountry] = useState(searchParams.get('country') || '');
   const [category, setCategory] = useState(searchParams.get('category') || '');
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -30,9 +32,11 @@ export default function RecipeListPage() {
 
       // Extract unique categories, countries, and ingredients from the fetched data
       const uniqueCategories = Array.from(
-        new Set(data.map((recipe: Recipe) => recipe.strCategory))
+        new Set(data.map((recipe: Recipe) => recipe.strCategory)),
       );
-      const uniqueCountries = Array.from(new Set(data.map((recipe: Recipe) => recipe.strArea)));
+      const uniqueCountries = Array.from(
+        new Set(data.map((recipe: Recipe) => recipe.strArea)),
+      );
       const uniqueIngredients = Array.from(
         new Set(
           data
@@ -41,8 +45,8 @@ export default function RecipeListPage() {
               recipe.strIngredient2,
               recipe.strIngredient3,
             ])
-            .filter(Boolean)
-        )
+            .filter(Boolean),
+        ),
       );
 
       setCategories(uniqueCategories as string[]);
@@ -59,13 +63,21 @@ export default function RecipeListPage() {
 
     if (ingredient)
       filteredRecipes = filteredRecipes.filter((recipe: Recipe) =>
-        [recipe.strIngredient1, recipe.strIngredient2, recipe.strIngredient3].includes(ingredient)
+        [
+          recipe.strIngredient1,
+          recipe.strIngredient2,
+          recipe.strIngredient3,
+        ].includes(ingredient),
       );
 
     if (country)
-      filteredRecipes = filteredRecipes.filter((recipe: Recipe) => recipe.strArea === country);
+      filteredRecipes = filteredRecipes.filter(
+        (recipe: Recipe) => recipe.strArea === country,
+      );
     if (category)
-      filteredRecipes = filteredRecipes.filter((recipe: Recipe) => recipe.strCategory === category);
+      filteredRecipes = filteredRecipes.filter(
+        (recipe: Recipe) => recipe.strCategory === category,
+      );
 
     setRecipes(filteredRecipes);
   }, [ingredient, country, category, allRecipes]);
@@ -90,16 +102,16 @@ export default function RecipeListPage() {
         {ingredient
           ? `Recipes with ${ingredient}`
           : country
-          ? `Recipes from ${country}`
-          : category
-          ? `Recipes in ${category}`
-          : 'All Recipes'}
+            ? `Recipes from ${country}`
+            : category
+              ? `Recipes in ${category}`
+              : 'All Recipes'}
       </h1>
 
       <div className={styles.filters}>
         <select
           value={ingredient}
-          onChange={e => {
+          onChange={(e) => {
             setIngredient(e.target.value);
             setCountry('');
             setCategory('');
@@ -107,8 +119,8 @@ export default function RecipeListPage() {
           }}
           className={styles.select}
         >
-          <option value=''>Filter by Ingredient</option>
-          {ingredients.map(item => (
+          <option value="">Filter by Ingredient</option>
+          {ingredients.map((item) => (
             <option key={item} value={item}>
               {item}
             </option>
@@ -117,7 +129,7 @@ export default function RecipeListPage() {
 
         <select
           value={country}
-          onChange={e => {
+          onChange={(e) => {
             setCountry(e.target.value);
             setIngredient('');
             setCategory('');
@@ -125,8 +137,8 @@ export default function RecipeListPage() {
           }}
           className={styles.select}
         >
-          <option value=''>Filter by Country</option>
-          {countries.map(item => (
+          <option value="">Filter by Country</option>
+          {countries.map((item) => (
             <option key={item} value={item}>
               {item}
             </option>
@@ -135,7 +147,7 @@ export default function RecipeListPage() {
 
         <select
           value={category}
-          onChange={e => {
+          onChange={(e) => {
             setCategory(e.target.value);
             setIngredient('');
             setCountry('');
@@ -143,8 +155,8 @@ export default function RecipeListPage() {
           }}
           className={styles.select}
         >
-          <option value=''>Filter by Category</option>
-          {categories.map(item => (
+          <option value="">Filter by Category</option>
+          {categories.map((item) => (
             <option key={item} value={item}>
               {item}
             </option>
@@ -154,9 +166,9 @@ export default function RecipeListPage() {
 
       <ul className={styles.recipeList}>
         {recipes.length === 0 ? (
-          <li className={styles.noRecipes}>No recipes found</li> 
+          <li className={styles.noRecipes}>No recipes found</li>
         ) : (
-          recipes.map(recipe => (
+          recipes.map((recipe) => (
             <li key={recipe.idMeal} className={styles.recipeCard}>
               <Link href={`/recipe/${recipe.idMeal}`}>
                 <Image

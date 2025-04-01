@@ -3,7 +3,11 @@ import styles from './RecipeInfo.module.scss';
 import { getRecipeById } from '@/app/api/recipes';
 import Image from 'next/image';
 
-export default async function RecipeInfoPage({ params }: { params: { id: string } }) {
+export default async function RecipeInfoPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const recipe = await getRecipeById(params.id);
 
   return (
@@ -27,7 +31,7 @@ export default async function RecipeInfoPage({ params }: { params: { id: string 
         <h3>Ingredients:</h3>
         <ul>
           {Object.keys(recipe)
-            .filter(key => key.startsWith('strIngredient') && recipe[key])
+            .filter((key) => key.startsWith('strIngredient') && recipe[key])
             .map((key, index) => (
               <li key={index}>
                 <Link href={`/?ingredient=${recipe[key]}`}>{recipe[key]}</Link>
