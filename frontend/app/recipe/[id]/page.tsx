@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import styles from './RecipeInfo.module.scss';
-import { getRecipeById } from '@/app/api/recipes';
+import { getRecipeById, getRecipes } from '@/app/api/recipes';
 import Image from 'next/image';
+import { Recipe } from '@/app/types';
 
 export default async function RecipeInfoPage({
   params,
@@ -9,6 +10,9 @@ export default async function RecipeInfoPage({
   params: { id: string };
 }) {
   const recipe = await getRecipeById(params.id);
+  const recipesByCategory: Recipe[] = await getRecipes({
+    category: recipe.strCategory,
+  });
 
   return (
     <div className={styles.container}>
@@ -25,18 +29,33 @@ export default async function RecipeInfoPage({
           <Link href={`/?country=${recipe.strArea}`}>{recipe.strArea}</Link>
         </p>
         <p>{recipe.strInstructions}</p>
+
+        <div className={styles.ingredients}>
+          <h3>Ingredients:</h3>
+          <ul>
+            {Object.keys(recipe)
+              .filter((key) => key.startsWith('strIngredient') && recipe[key])
+              .map((key, index) => (
+                <li key={index}>
+                  <Link href={`/?ingredient=${recipe[key]}`}>
+                    {recipe[key]}
+                  </Link>
+                </li>
+              ))}
+          </ul>
+        </div>
       </div>
 
       <div className={styles.ingredients}>
-        <h3>Ingredients:</h3>
+        <h3>Recipes of the category:</h3>
         <ul>
-          {Object.keys(recipe)
-            .filter((key) => key.startsWith('strIngredient') && recipe[key])
-            .map((key, index) => (
-              <li key={index}>
-                <Link href={`/?ingredient=${recipe[key]}`}>{recipe[key]}</Link>
-              </li>
-            ))}
+          {recipesByCategory.map((item, index) => (
+            <li key={index}>
+              <Link href={`/?category=${recipe.strCategory}`}>
+                {item.strMeal}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
