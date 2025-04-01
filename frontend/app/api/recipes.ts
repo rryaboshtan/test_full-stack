@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/recipes'; 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getRecipes = async (filter?: {
   ingredient?: string;
   country?: string;
   category?: string;
 }) => {
-  let url = API_URL;
+  let url = API_URL || '';
   if (filter?.ingredient) url += `?ingredient=${filter.ingredient}`;
   if (filter?.country) url += `?country=${filter.country}`;
   if (filter?.category) url += `?category=${filter.category}`;

@@ -15,7 +15,7 @@ export class AppModule implements NestModule {
     consumer
       .apply(
         cors({
-          origin: ['https://myfrontend.com'], // Разрешить только этот домен
+          origin: ['http://localhost:3200'],
           methods: ['GET', 'POST', 'PUT', 'DELETE'],
           allowedHeaders: ['Content-Type', 'Authorization'],
         }),
